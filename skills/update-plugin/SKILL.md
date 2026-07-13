@@ -72,4 +72,4 @@ If the user is running this inside an active session that already has the plugin
 
 **`claude plugin update` fails with "plugin not found":**
 
-> The marketplace isn't registered locally yet. Run `claude plugin marketplace add YOUR-ORG/elite-next-plugin` first, then retry.
+> The marketplace isn't registered locally yet. Run `claude plugin marketplace add elitebusinesssolutions/elite-next-plugin` first, then retry.

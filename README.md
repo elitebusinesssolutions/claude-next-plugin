@@ -9,7 +9,7 @@ This is the personal, one-machine install path. It works the same way whether or
 Add the marketplace:
 
 ```bash
-claude plugin marketplace add YOUR-ORG/elite-next-plugin
+claude plugin marketplace add elitebusinesssolutions/elite-next-plugin
 ```
 
 Then install the plugin:
@@ -21,7 +21,7 @@ claude plugin install elite-next@elite-next-marketplace
 This plugin can also be used with [copilot](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing) by replacing `claude` with `copilot`. E.g.
 
 ```bash
-copilot plugin marketplace add YOUR-ORG/elite-next-plugin
+copilot plugin marketplace add elitebusinesssolutions/elite-next-plugin
 copilot plugin install elite-next@elite-next-marketplace
 ```
 
@@ -43,7 +43,7 @@ Running `claude plugin install` locally only configures your own machine — it 
     "elite-next-marketplace": {
       "source": {
         "source": "github",
-        "repo": "YOUR-ORG/elite-next-plugin"
+        "repo": "elitebusinesssolutions/elite-next-plugin"
       },
       "autoUpdate": true
     }
@@ -70,7 +70,7 @@ This project uses the `elite-next@elite-next-marketplace` Claude Code plugin for
 If a user describes something an elite-next skill would normally handle (e.g. "review this codebase," "scaffold a new feature," "write tests for this function") and the matching skill isn't available or the `elite-next` plugin isn't installed:
 
 - Don't just report the plugin as missing and stop — that leaves the user to notice the message and copy the command themselves, which is the exact gap this fallback exists to close.
-- Tell them in plain language what's missing and offer to install it (`claude plugin marketplace add YOUR-ORG/elite-next-plugin` and `claude plugin install elite-next@elite-next-marketplace`) — then, if they agree, run those commands yourself rather than making them type it.
+- Tell them in plain language what's missing and offer to install it (`claude plugin marketplace add elitebusinesssolutions/elite-next-plugin` and `claude plugin install elite-next@elite-next-marketplace`) — then, if they agree, run those commands yourself rather than making them type it.
 - This changes machine-wide Claude Code state, not just this project, so treat it like any other consequential action: propose it, don't do it silently.
 
 Don't rely on the user typing `/elite-next:<skill-name>` directly. If that skill doesn't resolve, the client rejects the slash command before it ever reaches you, so this fallback never gets a chance to run — it only helps when they describe what they want in plain English.

@@ -3,7 +3,7 @@
 This is the elite-next Claude Code plugin. It ships shared skills and hooks for Next.js/TypeScript projects backed by a .NET API. Install it via:
 
 ```bash
-claude plugin marketplace add YOUR-ORG/elite-next-plugin
+claude plugin marketplace add elitebusinesssolutions/elite-next-plugin
 claude plugin install elite-next@elite-next-marketplace
 ```
 
@@ -58,7 +58,7 @@ Reference: [Plugin manifest schema](https://code.claude.com/docs/en/plugins-refe
   "name": "elite-next",
   "description": "Shared skills and hooks for Next.js / TypeScript / .NET API projects",
   "version": "0.1.0",
-  "repository": "https://github.com/YOUR-ORG/elite-next-plugin",
+  "repository": "https://github.com/elitebusinesssolutions/elite-next-plugin",
   "skills": "./skills/",
   "hooks": "./hooks/hooks.json"
 }
@@ -361,11 +361,11 @@ Reference: [Plugin marketplaces](https://code.claude.com/docs/en/plugin-marketpl
 ```json
 {
   "name": "elite-next-marketplace",
-  "owner": { "name": "YOUR-ORG" },
+  "owner": { "name": "elitebusinesssolutions" },
   "plugins": [
     {
       "name": "elite-next",
-      "source": { "source": "github", "repo": "YOUR-ORG/elite-next-plugin" }
+      "source": { "source": "github", "repo": "elitebusinesssolutions/elite-next-plugin" }
     }
   ]
 }
@@ -374,7 +374,7 @@ Reference: [Plugin marketplaces](https://code.claude.com/docs/en/plugin-marketpl
 This file registers the elite-next marketplace. Users add it and install the plugin with:
 
 ```bash
-claude plugin marketplace add YOUR-ORG/elite-next-plugin
+claude plugin marketplace add elitebusinesssolutions/elite-next-plugin
 claude plugin install elite-next@elite-next-marketplace
 ```
 

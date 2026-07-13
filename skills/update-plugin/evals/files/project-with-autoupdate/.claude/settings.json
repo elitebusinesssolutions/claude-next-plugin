@@ -3,7 +3,7 @@
     "elite-next-marketplace": {
       "source": {
         "source": "github",
-        "repo": "YOUR-ORG/elite-next-plugin"
+        "repo": "elitebusinesssolutions/elite-next-plugin"
       },
       "autoUpdate": true
     }
