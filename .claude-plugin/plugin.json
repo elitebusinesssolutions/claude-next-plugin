@@ -1,0 +1,8 @@
+{
+  "name": "elite-next",
+  "description": "Shared skills and hooks for Next.js / TypeScript / .NET API projects",
+  "version": "0.1.0",
+  "repository": "https://github.com/YOUR-ORG/elite-next-plugin",
+  "skills": "./skills/",
+  "hooks": "./hooks/hooks.json"
+}
