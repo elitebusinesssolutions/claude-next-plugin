@@ -43,15 +43,27 @@ try {
   // Otherwise npm exits 1 with "Missing script: test", which would block
   // every session in a project that simply hasn't set up tests yet.
   let hasTestScript = false;
+  let testScript = "";
   try {
     const pkg = JSON.parse(fs.readFileSync(path.join(cwd, "package.json"), "utf8"));
-    hasTestScript = Boolean(pkg?.scripts?.test);
+    testScript = pkg?.scripts?.test ?? "";
+    hasTestScript = Boolean(testScript);
   } catch {
     hasTestScript = false;
   }
 
   if (hasTestScript) {
-    const test = spawnSync("npm", ["test"], {
+    // Vitest's `--changed` scopes the run to tests affected by files that
+    // differ from git, instead of the whole suite. This is a Vitest-specific
+    // flag (Jest's equivalent is `--onlyChanged`, and other runners don't have
+    // one), so only add it when the test script actually invokes vitest and a
+    // .git directory exists for it to diff against — otherwise fall back to
+    // running the full suite, exactly as before.
+    const usesVitest = /vitest/.test(testScript);
+    const isGitRepo = fs.existsSync(path.join(cwd, ".git"));
+    const testArgs = usesVitest && isGitRepo ? ["test", "--", "--changed"] : ["test"];
+
+    const test = spawnSync("npm", testArgs, {
       cwd,
       encoding: "utf8",
       shell: true,

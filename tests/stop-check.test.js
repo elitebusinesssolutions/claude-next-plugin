@@ -8,13 +8,18 @@ const { runHook, pathWithoutStubs } = require("./helpers/run-hook");
 // stop-check.js only runs tsc if tsconfig.json exists, and only runs `npm
 // test` if package.json declares a test script — this fixture provides both
 // so tests can exercise the actual spawnSync/stub-bin invocation paths.
-function withProject(fn) {
+// `testScript`/`git` let tests exercise the --changed-appending logic, which
+// only kicks in for a vitest test script in an actual git repo.
+function withProject(fn, { testScript = "echo test", git = false } = {}) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), "elite-next-hook-test-"));
   fs.writeFileSync(path.join(dir, "tsconfig.json"), "{}");
   fs.writeFileSync(
     path.join(dir, "package.json"),
-    JSON.stringify({ name: "x", scripts: { test: "echo test" } })
+    JSON.stringify({ name: "x", scripts: { test: testScript } })
   );
+  if (git) {
+    fs.mkdirSync(path.join(dir, ".git"));
+  }
   try {
     return fn(dir);
   } finally {
@@ -117,6 +122,45 @@ test("tsc timing out is reported as a block, not silence", () => {
     assert.equal(out.decision, "block");
     assert.match(out.reason, /TypeScript check timed out/);
     Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, sleepMs + 200);
+  });
+});
+
+// --changed scopes the test run to files affected by what's actually different
+// from git, instead of the whole suite — but only when the test runner is
+// vitest (Jest's equivalent flag is spelled differently, and other runners
+// don't have one) and there's a real git repo to diff against.
+function argsUsedFor(cwd, extraEnv) {
+  const argsFile = path.join(cwd, "npm-args.txt");
+  run(
+    {
+      STUB_TSC_STATUS: "0",
+      STUB_NPM_TEST_STATUS: "0",
+      STUB_NPM_RECORD_ARGS_TO: argsFile,
+      ...extraEnv
+    },
+    cwd
+  );
+  return fs.readFileSync(argsFile, "utf8");
+}
+
+test("vitest test script in a git repo -> npm test is invoked with -- --changed", () => {
+  withProject((cwd) => assert.equal(argsUsedFor(cwd), "test -- --changed"), {
+    testScript: "vitest",
+    git: true
+  });
+});
+
+test("vitest test script without a git repo -> falls back to the full suite", () => {
+  withProject((cwd) => assert.equal(argsUsedFor(cwd), "test"), {
+    testScript: "vitest",
+    git: false
+  });
+});
+
+test("non-vitest test runner -> --changed is not appended even in a git repo", () => {
+  withProject((cwd) => assert.equal(argsUsedFor(cwd), "test"), {
+    testScript: "jest",
+    git: true
   });
 });
 
