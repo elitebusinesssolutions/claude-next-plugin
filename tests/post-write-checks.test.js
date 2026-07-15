@@ -34,7 +34,7 @@ test("skips plugin hooks/ files outside src/", () => {
   const r = run({
     tool_name: "Write",
     tool_input: {
-      file_path: "C:/project/hooks/format.js",
+      file_path: "C:/project/hooks/protect-generated.js",
       content: "const x = y as any;"
     }
   });

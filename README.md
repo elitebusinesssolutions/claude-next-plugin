@@ -1,4 +1,4 @@
-# elite-next-plugin
+# claude-next-plugin
 
 Shared Claude Code skills and hooks for Next.js / TypeScript / .NET API projects.
 
@@ -9,7 +9,7 @@ This is the personal, one-machine install path. It works the same way whether or
 Add the marketplace:
 
 ```bash
-claude plugin marketplace add elitebusinesssolutions/elite-next-plugin
+claude plugin marketplace add elitebusinesssolutions/claude-next-plugin
 ```
 
 Then install the plugin:
@@ -21,7 +21,7 @@ claude plugin install elite-next@elite-next-marketplace
 This plugin can also be used with [copilot](https://docs.github.com/en/copilot/how-tos/copilot-cli/customize-copilot/plugins-finding-installing) by replacing `claude` with `copilot`. E.g.
 
 ```bash
-copilot plugin marketplace add elitebusinesssolutions/elite-next-plugin
+copilot plugin marketplace add elitebusinesssolutions/claude-next-plugin
 copilot plugin install elite-next@elite-next-marketplace
 ```
 
@@ -43,7 +43,7 @@ Running `claude plugin install` locally only configures your own machine — it 
     "elite-next-marketplace": {
       "source": {
         "source": "github",
-        "repo": "elitebusinesssolutions/elite-next-plugin"
+        "repo": "elitebusinesssolutions/claude-next-plugin"
       },
       "autoUpdate": true
     }
@@ -70,7 +70,7 @@ This project uses the `elite-next@elite-next-marketplace` Claude Code plugin for
 If a user describes something an elite-next skill would normally handle (e.g. "review this codebase," "scaffold a new feature," "write tests for this function") and the matching skill isn't available or the `elite-next` plugin isn't installed:
 
 - Don't just report the plugin as missing and stop — that leaves the user to notice the message and copy the command themselves, which is the exact gap this fallback exists to close.
-- Tell them in plain language what's missing and offer to install it (`claude plugin marketplace add elitebusinesssolutions/elite-next-plugin` and `claude plugin install elite-next@elite-next-marketplace`) — then, if they agree, run those commands yourself rather than making them type it.
+- Tell them in plain language what's missing and offer to install it (`claude plugin marketplace add elitebusinesssolutions/claude-next-plugin` and `claude plugin install elite-next@elite-next-marketplace`) — then, if they agree, run those commands yourself rather than making them type it.
 - This changes machine-wide Claude Code state, not just this project, so treat it like any other consequential action: propose it, don't do it silently.
 
 Don't rely on the user typing `/elite-next:<skill-name>` directly. If that skill doesn't resolve, the client rejects the slash command before it ever reaches you, so this fallback never gets a chance to run — it only helps when they describe what they want in plain English.
@@ -106,7 +106,6 @@ then invoke it as `/elite-next:<skill-name>` and run `/reload-plugins` after edi
 | `new-feature`       | `/elite-next:new-feature`       | Scaffold a new feature folder following feature-based architecture                |
 | `pr-review`         | `/elite-next:pr-review`         | Full PR review: conventions, security, code quality, docs accuracy                |
 | `setup-env-local`   | `/elite-next:setup-env-local`   | Write API_BASE_URL to .env.local for local .NET API development                   |
-| `setup-formatting`  | `/elite-next:setup-formatting`  | Set up Prettier, ESLint auto-fix, EditorConfig, and VS Code format-on-save        |
 | `ui-update`         | `/elite-next:ui-update`         | Safely apply a UI change everywhere it appears across the repo                    |
 | `unit-tests`        | `/elite-next:unit-tests`        | Write Vitest unit tests for pure functions in src/                                |
 | `update-plugin`     | `/elite-next:update-plugin`     | Update the installed elite-next plugin to the latest marketplace version          |
@@ -118,9 +117,9 @@ Automatically wired when the plugin is enabled:
 | Hook                   | Trigger                | What it does                                                                                                                                                |
 | ---------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `protect-generated.js` | PreToolUse Write/Edit  | Blocks edits to the auto-generated OpenAPI client/types; warns before editing a locally-synced OpenAPI spec file                                            |
-| `format.js`            | PostToolUse Write/Edit | Runs ESLint `--fix` + Prettier on every saved file                                                                                                          |
 | `post-write-checks.js` | PostToolUse Write/Edit | Flags `as any`, `window.confirm()`, silent `.catch`, inline `style={{}}`, direct API client use in pages/routes, hardcoded secrets; notes related importers |
-| `stop-check.js`        | Stop                   | Runs `tsc --noEmit` + `npm test` at session end; silent on pass                                                                                             |
+
+Lint/format (ESLint + Prettier) and type-check/test-on-Stop hooks moved to the separate [claude-typescript-plugin](https://github.com/elitebusinesssolutions/claude-typescript-plugin) — install it alongside this plugin if you want that coverage; it isn't a dependency of this one.
 
 ## Testing skills (evals)
 
