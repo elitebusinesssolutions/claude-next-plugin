@@ -7,7 +7,7 @@ Update the `elite-next` plugin (this plugin, once installed in a consumer projec
 
 ## Step 1 — Check whether autoUpdate is already handling this
 
-Look for an `extraKnownMarketplaces.elite-next-marketplace.autoUpdate` field set to `true` in the project's `.claude/settings.json` (this is what the `elite-next-plugin` README's "Consumer project setup" section recommends). If it's already `true`:
+Look for an `extraKnownMarketplaces.elite-next-marketplace.autoUpdate` field set to `true` in the project's `.claude/settings.json` (this is what the `claude-next-plugin` README's "Consumer project setup" section recommends). If it's already `true`:
 
 - Claude Code refreshes the marketplace and updates the installed plugin automatically at every startup — no manual command is required, for this update or future ones. This assumes the plugin was actually installed at some point already; `autoUpdate` keeps an existing install current, it doesn't perform the initial install (see the caveats in `${CLAUDE_PLUGIN_ROOT}/README.md` on why the initial `enabledPlugins`-triggered install isn't reliable on its own — if `claude plugin list` shows the plugin isn't installed at all yet, that's the gap to fix, not this one).
 - Tell the user that once they (and their teammates, if project-scoped) pull the merged change and restart Claude Code, the update applies on its own.
@@ -72,4 +72,4 @@ If the user is running this inside an active session that already has the plugin
 
 **`claude plugin update` fails with "plugin not found":**
 
-> The marketplace isn't registered locally yet. Run `claude plugin marketplace add elitebusinesssolutions/elite-next-plugin` first, then retry.
+> The marketplace isn't registered locally yet. Run `claude plugin marketplace add elitebusinesssolutions/claude-next-plugin` first, then retry.

@@ -1,5 +1,5 @@
 {
-  "name": "elite-next-plugin",
+  "name": "claude-next-plugin",
   "private": true,
   "version": "0.1.0",
   "description": "Test suite for the elite-next Claude Code plugin's hook scripts",
