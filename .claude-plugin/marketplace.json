@@ -10,7 +10,7 @@
       "description": "Shared skills and hooks for Next.js / TypeScript / .NET API projects",
       "source": {
         "source": "github",
-        "repo": "elitebusinesssolutions/elite-next-plugin"
+        "repo": "elitebusinesssolutions/claude-next-plugin"
       }
     }
   ]

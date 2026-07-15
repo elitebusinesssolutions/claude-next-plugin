@@ -133,7 +133,7 @@ BREAKING CHANGE: all references to `/api/quotes` must be updated to `/api/propos
    git commit -m "feat(scope): description"
    ```
 
-5. After committing, remind the user that `stop-check.js` will run `tsc --noEmit` and `npm test` at session end — fix any failures before pushing.
+5. After committing, remind the user to run `npm test` (and `tsc --noEmit`, if the project uses TypeScript) before pushing.
 
 ## Step-by-step: opening a PR
 
